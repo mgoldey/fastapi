@@ -51,7 +51,9 @@ def create_response_field(
     field_info = field_info or FieldInfo(None)
 
     response_field = functools.partial(
-        ModelField,
+        getattr(ModelField, "construct")
+        if hasattr(ModelField, "construct")
+        else ModelField,
         name=name,
         type_=type_,
         class_validators=class_validators,
